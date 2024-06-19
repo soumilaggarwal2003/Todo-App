@@ -1,0 +1,45 @@
+<div class="container">
+<h1 class="text-center mb-3 my-3"> Todo List</h1>
+<h2>Add a todo</h2>
+<div class="my-3">
+<form [formGroup]="addTodoForm" (ngSubmit)="onSubmit(addTodoForm.value)">
+        <div class="mb-3">
+          <label for="title" class="form-label">Todo Title</label>
+          <input type="text" formControlName="title"  class="form-control" id="title" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="desc" class="form-label">Todo Description</label>
+          <input type="text" formControlName="description"  class="form-control" id="desc">
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary">Add Todo</button>
+</form>
+</div>
+
+<h2>Todo Items</h2>
+
+<div *ngIf="this.todos.length===0;else other_content">
+    No Todo's to display
+</div>
+
+<ng-template #other_content>
+    <div *ngFor="let todo of todos; index as i">
+
+
+        <h5 class="my-4 mb-3" [ngClass]="{'strike':!todo.active}" >{{i+1}}) {{todo.title}}</h5>
+        <p [ngClass]="{'strike':!todo.active}">{{todo.desc}}</p>
+        
+        <div class=" form-check">
+            <input type="checkbox" class="form-check-input" (click)="onCheckboxClick(todo)" id="todo{{i}}" [checked]="!todo.active">
+            <label class="bg-warning form-check-label" for="todo{{i}}">Mark as done</label>
+            <button class="mx-3 btn btn-danger btn-sm" (click)="deleteTodo(todo)" >Delete</button>
+        </div>
+
+        
+    </div>
+    
+</ng-template>
+
+</div>
+
+   
+
